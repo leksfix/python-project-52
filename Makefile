@@ -1,5 +1,6 @@
 install:
 	uv sync
+	uv add gunicorn
 
 build:
 	./build.sh
