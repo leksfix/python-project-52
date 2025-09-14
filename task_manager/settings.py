@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-d%8(=jf9e#4zh&$q%=eoveuyj29x+8e4#%-ls(rof)+-cy^y%k
 DEBUG = True
 
 #ALLOWED_HOSTS = ['webserver', '127.0.0.1'] ## Add webserver and localhost
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*'] ##
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    ##'django.middleware.locale.LocaleMiddleware', ##
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -112,6 +113,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',  ##
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
