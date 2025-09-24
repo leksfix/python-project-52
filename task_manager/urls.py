@@ -17,8 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from task_manager import views
+from django.urls import path, include
+from django.views.i18n import set_language
 
 urlpatterns = [
+    path('language/', set_language, name="language"),
     path('admin/', admin.site.urls),
-    path('', views.IndexView.as_view())
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
+    path("users/", include("task_manager.users.urls")),
+    path('', views.IndexView.as_view(), name="index"),
 ]
