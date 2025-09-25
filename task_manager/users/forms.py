@@ -11,10 +11,15 @@ class UserCreateForm(UserCreationForm):
             "username",
         ]
 
-    def clean_username(self):
-        # To skip user existance check
-        return self.cleaned_data.get("username")
-
 
 class UserUpdateForm(UserCreateForm):
-    pass
+
+    def clean_username(self):
+        new_username = self.cleaned_data.get("username")
+        old_username = self.instance.username
+        if new_username.lower() == old_username.lower():
+            # Skip user existance check
+            return new_username
+        else:
+            return super().clean_username()
+
