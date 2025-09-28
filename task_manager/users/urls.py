@@ -1,6 +1,6 @@
 from django.urls import path
 from task_manager.users import views
-from django.urls import path, include
+from django.urls import path
 
 urlpatterns = [
     path("create/", views.UsersCreateView.as_view(), name="users_create"),

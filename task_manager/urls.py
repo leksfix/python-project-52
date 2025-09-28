@@ -18,13 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from task_manager import views
 from django.urls import path, include
-from django.views.i18n import set_language
 
 urlpatterns = [
-    path('language/', set_language, name="language"),
+    path("i18n/", include("django.conf.urls.i18n")),
     path('admin/', admin.site.urls),
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", views.LogoutView.as_view(), name="logout"),
     path("users/", include("task_manager.users.urls")),
+    path("statuses/", include("task_manager.statuses.urls")),
     path('', views.IndexView.as_view(), name="index"),
 ]

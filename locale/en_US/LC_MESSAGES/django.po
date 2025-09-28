@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-24 18:17+0200\n"
+"POT-Creation-Date: 2025-09-26 21:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,88 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: task_manager/statuses/models.py:8
+#: task_manager/statuses/templates/statuses/status_list.html:17
+msgid "Name"
+msgstr ""
+
+#: task_manager/statuses/models.py:15
+#, fuzzy
+#| msgid "menu_statuses"
+msgid "Status"
+msgstr "Statuses"
+
+#: task_manager/statuses/models.py:16
+#: task_manager/statuses/templates/statuses/status_list.html:6
+#, fuzzy
+#| msgid "menu_statuses"
+msgid "Statuses"
+msgstr "Statuses"
+
+#: task_manager/statuses/templates/statuses/status_create.html:6
+#: task_manager/statuses/templates/statuses/status_list.html:11
+msgid "Create status"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_create.html:14
+msgid "Create"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_delete.html:6
+msgid "Delete status"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_delete.html:10
+#: task_manager/users/templates/users/user_delete.html:10
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_delete.html:13
+#: task_manager/users/templates/users/user_delete.html:13
+msgid "Yes, delete"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_list.html:16
+#: task_manager/users/templates/users/user_list.html:13
+msgid "ID"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_list.html:18
+#: task_manager/users/templates/users/user_list.html:16
+msgid "Creation date"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_list.html:29
+#: task_manager/users/templates/users/user_list.html:28
+msgid "Edit"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_list.html:31
+#: task_manager/users/templates/users/user_list.html:30
+msgid "Delete"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_update.html:6
+msgid "Edit status"
+msgstr ""
+
+#: task_manager/statuses/templates/statuses/status_update.html:13
+#: task_manager/users/templates/users/user_update.html:13
+msgid "Update"
+msgstr ""
+
+#: task_manager/statuses/views.py:22
+msgid "Status successfully created"
+msgstr ""
+
+#: task_manager/statuses/views.py:35
+msgid "Status successfully updated"
+msgstr ""
+
+#: task_manager/statuses/views.py:47
+msgid "Status successfully deleted"
+msgstr ""
 
 #: task_manager/templates/base.html:13
 msgid "app_name"
@@ -69,20 +151,8 @@ msgstr ""
 msgid "Delete user"
 msgstr ""
 
-#: task_manager/users/templates/users/user_delete.html:10
-msgid "Are you sure you want to delete"
-msgstr ""
-
-#: task_manager/users/templates/users/user_delete.html:13
-msgid "Yes, delete"
-msgstr ""
-
 #: task_manager/users/templates/users/user_list.html:6
 msgid "Users"
-msgstr ""
-
-#: task_manager/users/templates/users/user_list.html:13
-msgid "ID"
 msgstr ""
 
 #: task_manager/users/templates/users/user_list.html:14
@@ -93,24 +163,20 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
-#: task_manager/users/templates/users/user_list.html:16
-msgid "Creation date"
-msgstr ""
-
-#: task_manager/users/templates/users/user_list.html:28
-msgid "Edit"
-msgstr ""
-
-#: task_manager/users/templates/users/user_list.html:30
-msgid "Delete"
-msgstr ""
-
 #: task_manager/users/templates/users/user_update.html:6
 msgid "Update user"
 msgstr ""
 
-#: task_manager/users/templates/users/user_update.html:13
-msgid "Update"
+#: task_manager/users/views.py:22
+msgid "User successfully created"
+msgstr ""
+
+#: task_manager/users/views.py:35
+msgid "User successfully updated"
+msgstr ""
+
+#: task_manager/users/views.py:47
+msgid "User successfully deleted"
 msgstr ""
 
 #: task_manager/views.py:21
