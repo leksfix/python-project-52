@@ -1,9 +1,9 @@
-from django.contrib import messages
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.models import User
 from task_manager.users.forms import UserCreateForm, UserUpdateForm
 from django.urls import reverse_lazy
-from django.utils.translation import gettext
+from django.utils.translation import gettext, gettext_lazy
+from task_manager.utils.mixins import FormMessagesMixin
 
 class UsersIndexView(ListView):
     model = User
@@ -11,38 +11,26 @@ class UsersIndexView(ListView):
     template_name = "users/user_list.html"
 
 
-class UsersCreateView(CreateView):
+class UsersCreateView(FormMessagesMixin, CreateView):
     model = User
     form_class = UserCreateForm
     template_name = "users/user_create.html"
     success_url = reverse_lazy("users_index")
-    
-    def post(self, request, *args, **kwargs):
-        res = super().post(request, *args, **kwargs)
-        messages.success(request, gettext("User successfully created"))
-        return res
+    success_message = gettext_lazy("User successfully created")
 
 
 
-class UsersUpdateView(UpdateView):
+class UsersUpdateView(FormMessagesMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = "users/user_update.html"
     success_url = reverse_lazy("users_index")
-
-    def post(self, request, *args, **kwargs):
-        res = super().post(request, *args, **kwargs)
-        messages.success(request, gettext("User successfully updated"))
-        return res
+    success_message = gettext_lazy("User successfully updated")
 
 
 
-class UsersDeleteView(DeleteView):
+class UsersDeleteView(FormMessagesMixin, DeleteView):
     model = User
     template_name = "users/user_delete.html"
     success_url = reverse_lazy("users_index")
-
-    def post(self, request, *args, **kwargs):
-        res = super().post(request, *args, **kwargs)
-        messages.success(request, gettext("User successfully deleted"))
-        return res
+    success_message = gettext_lazy("User successfully deleted")

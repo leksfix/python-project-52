@@ -1,9 +1,9 @@
-from django.contrib import messages
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from task_manager.statuses.models import Status
 from task_manager.statuses.forms import StatusForm
 from django.urls import reverse_lazy
-from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy
+from task_manager.utils.mixins import FormMessagesMixin
 
 class StatusesIndexView(ListView):
     model = Status
@@ -11,39 +11,27 @@ class StatusesIndexView(ListView):
     template_name = "statuses/status_list.html"
 
 
-class StatusesCreateView(CreateView):
+class StatusesCreateView(FormMessagesMixin, CreateView):
     model = Status
     form_class = StatusForm
     template_name = "statuses/status_create.html"
     success_url = reverse_lazy("statuses_index")
-
-    def post(self, request, *args, **kwargs):
-        res = super().post(request, *args, **kwargs)
-        messages.success(request, gettext("Status successfully created"))
-        return res
+    success_message = gettext_lazy("Status successfully created")
 
 
 
-class StatusesUpdateView(UpdateView):
+class StatusesUpdateView(FormMessagesMixin, UpdateView):
     model = Status
     form_class = StatusForm
     template_name = "statuses/status_update.html"
     success_url = reverse_lazy("statuses_index")
-
-    def post(self, request, *args, **kwargs):
-        res = super().post(request, *args, **kwargs)
-        messages.success(request, gettext("Status successfully updated"))
-        return res
+    success_message = gettext_lazy("Status successfully updated")
 
 
 
-class StatusesDeleteView(DeleteView):
+class StatusesDeleteView(FormMessagesMixin, DeleteView):
     model = Status
     template_name = "statuses/status_delete.html"
     success_url = reverse_lazy("statuses_index")
-
-    def post(self, request, *args, **kwargs):
-        res = super().post(request, *args, **kwargs)
-        messages.success(request, gettext("Status successfully deleted"))
-        return res
+    success_message = gettext_lazy("Status successfully deleted")
 

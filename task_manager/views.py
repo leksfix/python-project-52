@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from task_manager.forms import LoginForm
 from django.contrib.auth import views as auth_views
 from django.utils.translation import gettext, gettext_lazy
+from task_manager.utils.mixins import FormMessagesMixin
 
 
 class IndexView(TemplateView):
@@ -10,15 +11,11 @@ class IndexView(TemplateView):
 
 
 
-class LoginView(auth_views.LoginView):
+class LoginView(FormMessagesMixin, auth_views.LoginView):
     template_name = "login.html"
     authentication_form = LoginForm
     next_page = 'index'
-
-    def form_valid(self, form):
-        res = super().form_valid(form)
-        messages.success(self.request, gettext_lazy("You are logged in"))
-        return res
+    success_message = gettext_lazy("You are logged in")
 
 
 
