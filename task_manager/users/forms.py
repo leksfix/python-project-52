@@ -20,6 +20,6 @@ class UserUpdateForm(UserCreateForm):
         if new_username.lower() == old_username.lower():
             # Skip user existance check
             return new_username
-        else:
-            return super().clean_username()
+        
+        return super().clean_username()
 

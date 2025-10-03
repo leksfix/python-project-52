@@ -2,8 +2,8 @@ from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from task_manager.statuses.models import Status
 from task_manager.statuses.forms import StatusForm
 from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy
-from task_manager.utils.mixins import FormMessagesMixin
+from django.utils.translation import gettext_lazy as _
+from django.contrib.messages.views import SuccessMessageMixin
 
 class StatusesIndexView(ListView):
     model = Status
@@ -11,27 +11,27 @@ class StatusesIndexView(ListView):
     template_name = "statuses/status_list.html"
 
 
-class StatusesCreateView(FormMessagesMixin, CreateView):
+class StatusesCreateView(SuccessMessageMixin, CreateView):
     model = Status
     form_class = StatusForm
     template_name = "statuses/status_create.html"
     success_url = reverse_lazy("statuses_index")
-    success_message = gettext_lazy("Status successfully created")
+    success_message = _("Status successfully created")
 
 
 
-class StatusesUpdateView(FormMessagesMixin, UpdateView):
+class StatusesUpdateView(SuccessMessageMixin, UpdateView):
     model = Status
     form_class = StatusForm
     template_name = "statuses/status_update.html"
     success_url = reverse_lazy("statuses_index")
-    success_message = gettext_lazy("Status successfully updated")
+    success_message = _("Status successfully updated")
 
 
 
-class StatusesDeleteView(FormMessagesMixin, DeleteView):
+class StatusesDeleteView(SuccessMessageMixin, DeleteView):
     model = Status
-    template_name = "statuses/status_delete.html"
+    template_name = "statuses/status_confirm_delete.html"
     success_url = reverse_lazy("statuses_index")
-    success_message = gettext_lazy("Status successfully deleted")
+    success_message = _("Status successfully deleted")
 
