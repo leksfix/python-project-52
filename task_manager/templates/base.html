@@ -25,7 +25,7 @@
               <a class="nav-link" href="{% url 'statuses_index' %}">{% translate "menu_statuses" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'users_index' %}">{% translate "menu_tags" %}</a>
+              <a class="nav-link" href="{% url 'labels_index' %}">{% translate "menu_labels" %}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'tasks_index' %}">{% translate "menu_tasks" %}</a>
@@ -79,9 +79,6 @@
       
 
 {% bootstrap_messages %}
-
-<p>user.is_authenticated: {{ user.is_authenticated }}</p>
-<p>LANGUAGE_CODE: {{ LANGUAGE_CODE }}</p>
 
       <h1 class="my-4">
         

@@ -8,5 +8,6 @@ class TaskForm(ModelForm):
             "name",
             "description",
             "status",
-            "assignee"
+            "assignee",
+            "labels"
         ]

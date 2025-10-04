@@ -34,10 +34,10 @@
       </div>
       <div class="row p-1">
         <div class="col">
-          <h6>{% translate "Tags" %}:</h6>
+          <h6>{% translate "Labels" %}:</h6>
           <ul>
-            {% for tag in object.tags %}
-              <li>{tag}</li>
+            {% for label in object.labels.all %}
+              <li>{{label}}</li>
             {% endfor %}
           </ul>
         </div>
