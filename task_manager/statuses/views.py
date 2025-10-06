@@ -6,7 +6,7 @@ from task_manager.statuses.forms import StatusForm
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.utils import IntegrityError
+from django.db.models import ProtectedError
 
 class StatusesIndexView(ListView):
     model = Status
@@ -41,6 +41,6 @@ class StatusesDeleteView(SuccessMessageMixin, DeleteView):
     def post(self, request, *args, **kwargs):
         try:
             return super().post(request, *args, **kwargs)
-        except IntegrityError:
+        except ProtectedError:
             messages.error(self.request, _("The status cannot be deleted because it is in use"))
             return redirect(reverse_lazy("statuses_index"))

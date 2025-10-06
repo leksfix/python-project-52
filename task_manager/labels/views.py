@@ -6,7 +6,6 @@ from task_manager.labels.forms import LabelForm
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.utils import IntegrityError
 
 class LabelsIndexView(ListView):
     model = Label

@@ -4,14 +4,13 @@ from task_manager.tasks.forms import TaskForm
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 
 
 class TasksIndexView(LoginRequiredMixin, ListView):
-    model = Task
-    ordering = "id"
+    queryset = Task.objects.order_by("id")
     template_name = "tasks/task_list.html"
     login_url = reverse_lazy("login")
 
@@ -32,8 +31,7 @@ class TasksCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     login_url = reverse_lazy("login")
 
     def form_valid(self, form):
-        instance = form.save(commit=False)
-        instance.author_id = self.request.user.id
+        form.instance.author_id = self.request.user.id
         
         return super().form_valid(form)
 
@@ -49,7 +47,7 @@ class TasksUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 
-class TasksDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class TasksDeleteView(UserPassesTestMixin, LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Task
     template_name = "tasks/task_confirm_delete.html"
     success_url = reverse_lazy("tasks_index")
@@ -57,20 +55,10 @@ class TasksDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     login_url = reverse_lazy("login")
     del_error_message = _("A task can only be deleted by its author")
 
+    def test_func(self):
+        self.get_object().author_id == self.request.user.id
 
-    def get(self, request, *args, **kwargs):
-        res = super().get(request, *args, **kwargs)
-        if not self.object.author_id == self.request.user.id:
-            messages.error(request, self.del_error_message)
-            return redirect(reverse_lazy("tasks_index"))
-
-        return res
-    
-    def post(self, request, *args, **kwargs):
-        object = self.get_object()
-        if not object.author_id == self.request.user.id:
-            messages.error(request, self.del_error_message)
-            return redirect(reverse_lazy("tasks_index"))
-        
-        return super().post(request, *args, **kwargs)
+    def handle_no_permission(self):
+        messages.error(self.request, self.del_error_message)
+        return redirect(reverse_lazy("tasks_index"))
 

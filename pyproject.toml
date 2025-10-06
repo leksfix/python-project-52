@@ -9,4 +9,5 @@ dependencies = [
     "gunicorn>=23.0.0",
     "dj-database-url>=3.0.1",
     "django-bootstrap5==25.1",
+    "django-filter>=25.2",
 ]

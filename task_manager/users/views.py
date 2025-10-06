@@ -6,27 +6,20 @@ from task_manager.users.forms import UserCreateForm, UserUpdateForm
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.utils import IntegrityError
+from django.db.models import ProtectedError
+from django.contrib.auth.mixins import UserPassesTestMixin
 
-class CheckSameUserMixin():
+class CheckSameUserMixin(UserPassesTestMixin):
     same_user_error_message = _("You do not have permission to modify another user")
     same_user_error_url = ""
 
-    def get(self, request, *args, **kwargs):
-        res = super().get(request, *args, **kwargs)
-        if not self.object.id == self.request.user.id:
-            messages.error(request, self.same_user_error_message)
-            return redirect(self.same_user_error_url)
+    def test_func(self):
+        self.kwargs["pk"] == self.request.user.id
 
-        return res
+    def handle_no_permission(self):
+        messages.error(self.request, self.same_user_error_message)
+        return redirect(reverse_lazy("users_index"))
 
-    def post(self, request, *args, **kwargs):
-        user = self.get_object()
-        if not user.id == self.request.user.id:
-            messages.error(request, self.same_user_error_message)
-            return redirect(self.same_user_error_url)
-
-        return super().post(request, *args, **kwargs)
 
 
 
@@ -65,6 +58,6 @@ class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
     def post(self, request, *args, **kwargs):
         try:
             return super().post(request, *args, **kwargs)
-        except IntegrityError:
+        except ProtectedError:
             messages.error(self.request, _("The user cannot be deleted because it is in use"))
             return redirect(reverse_lazy("users_index"))

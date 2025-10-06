@@ -54,17 +54,13 @@ msgstr ""
 #: task_manager/statuses/models.py:15 task_manager/tasks/models.py:19
 #: task_manager/templates/tasks/task_detail.html:28
 #: task_manager/templates/tasks/task_list.html:18
-#, fuzzy
-#| msgid "menu_statuses"
 msgid "Status"
-msgstr "Statuses"
+msgstr ""
 
 #: task_manager/statuses/models.py:16
 #: task_manager/templates/statuses/status_list.html:6
-#, fuzzy
-#| msgid "menu_statuses"
 msgid "Statuses"
-msgstr "Statuses"
+msgstr ""
 
 #: task_manager/statuses/views.py:22
 msgid "Status successfully created"
@@ -136,10 +132,8 @@ msgid "menu_statuses"
 msgstr "Statuses"
 
 #: task_manager/templates/base.html:28
-#, fuzzy
-#| msgid "menu_tags"
 msgid "menu_labels"
-msgstr "Tags"
+msgstr "Labels"
 
 #: task_manager/templates/base.html:31
 msgid "menu_tasks"
