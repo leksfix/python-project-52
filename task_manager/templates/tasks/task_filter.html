@@ -12,9 +12,10 @@
 
 <div class="card mb-3">
   <div class="card-body bg-light">
-    <form class="form-inline center" method="get">
+    <form class="form-inline center" method="get" novalidate>
       {% bootstrap_form filter.form %}
-      <input type="submit" />
+      {% translate "Show" as btn_filter %}
+      {% bootstrap_button button_type="submit" button_class="btn-primary" content=btn_filter %}
     </form>
   </div>
 </div>
@@ -32,7 +33,7 @@
     </tr>
   </thead>
   <tbody>
-      {% for task in task_list %}
+      {% for task in filter.qs %}
       <tr>
         <td>{{ task.id }}</td>
         <td><a href="{% url 'tasks_detail' task.id %}">{{ task.name }}</a></td>

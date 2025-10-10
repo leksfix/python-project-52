@@ -1,18 +1,50 @@
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
+from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 from task_manager.tasks.models import Task
 from task_manager.tasks.forms import TaskForm
+from task_manager.labels.models import Label
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+import django_filters
+import django.forms
 
 
-class TasksIndexView(LoginRequiredMixin, ListView):
-    queryset = Task.objects.order_by("id")
-    template_name = "tasks/task_list.html"
-    login_url = reverse_lazy("login")
+class TasksFilter(django_filters.FilterSet):
+    label = django_filters.filters.ModelChoiceFilter(
+        field_name="labels",
+        queryset=Label.objects.all(),
+        label=_("Label"),
+    )
+    my_tasks = django_filters.filters.BooleanFilter(
+        method='my_tasks_filter',
+        field_name="assignee_id",
+        label=_("Only my tasks"),
+        widget=django.forms.CheckboxInput,
+    )
+
+    class Meta:
+        model = Task
+        fields = [
+            "status",
+            "assignee",
+        ]
+    
+    def my_tasks_filter(self, queryset, name, value):
+        if value:
+            return queryset.filter(assignee_id=self.request.user.id)
+        return queryset
+
+
+def tasks_index(request):
+    filter = TasksFilter(
+        request.GET,
+        queryset=Task.objects.all(),
+        request=request
+    )
+    return render(request, 'tasks/task_filter.html', {'filter': filter})
 
 
 class TasksDetailView(LoginRequiredMixin, DetailView):
