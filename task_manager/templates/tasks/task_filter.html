@@ -12,7 +12,7 @@
 
 <div class="card mb-3">
   <div class="card-body bg-light">
-    <form class="form-inline center" method="get" novalidate>
+    <form class="form-inline center" method="get">
       {% bootstrap_form filter.form %}
       {% translate "Show" as btn_filter %}
       {% bootstrap_button button_type="submit" button_class="btn-primary" content=btn_filter %}

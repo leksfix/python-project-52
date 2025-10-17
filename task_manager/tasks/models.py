@@ -38,7 +38,7 @@ class Task(models.Model):
         blank=True,
         verbose_name=_("Labels")
         )
-    
+
     class Meta:
         verbose_name = _("Task")
         verbose_name_plural = _("Tasks")
