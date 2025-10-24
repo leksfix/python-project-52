@@ -17,25 +17,25 @@
       <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'users_index' %}">{% translate "menu_users" %}</a>
+            <a class="nav-link" href="{% url 'users:index' %}">{% translate "menu_users" %}</a>
           </li>
           
           {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'statuses_index' %}">{% translate "menu_statuses" %}</a>
+              <a class="nav-link" href="{% url 'statuses:index' %}">{% translate "menu_statuses" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'labels_index' %}">{% translate "menu_labels" %}</a>
+              <a class="nav-link" href="{% url 'labels:index' %}">{% translate "menu_labels" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'tasks_index' %}">{% translate "menu_tasks" %}</a>
+              <a class="nav-link" href="{% url 'tasks:index' %}">{% translate "menu_tasks" %}</a>
             </li>
           {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">{% translate "menu_login" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'users_create' %}">{% translate "menu_signup" %}</a>
+              <a class="nav-link" href="{% url 'users:create' %}">{% translate "menu_signup" %}</a>
             </li>
           {% endif %}
         </ul>

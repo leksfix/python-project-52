@@ -9,7 +9,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 class LabelsIndexView(ListView):
     model = Label
-    ordering = "id"
+    queryset = Label.objects.all().order_by("id")
     template_name = "labels/label_list.html"
 
 
@@ -17,7 +17,7 @@ class LabelsCreateView(SuccessMessageMixin, CreateView):
     model = Label
     form_class = LabelForm
     template_name = "labels/label_create.html"
-    success_url = reverse_lazy("labels_index")
+    success_url = reverse_lazy("labels:index")
     success_message = _("Label successfully created")
 
 
@@ -26,7 +26,7 @@ class LabelsUpdateView(SuccessMessageMixin, UpdateView):
     model = Label
     form_class = LabelForm
     template_name = "labels/label_update.html"
-    success_url = reverse_lazy("labels_index")
+    success_url = reverse_lazy("labels:index")
     success_message = _("Label successfully updated")
 
 
@@ -34,13 +34,13 @@ class LabelsUpdateView(SuccessMessageMixin, UpdateView):
 class LabelsDeleteView(SuccessMessageMixin, DeleteView):
     model = Label
     template_name = "labels/label_confirm_delete.html"
-    success_url = reverse_lazy("labels_index")
+    success_url = reverse_lazy("labels:index")
     success_message = _("Label successfully deleted")
 
     def post(self, request, *args, **kwargs):
         object = self.get_object()
         if object.task_set.exists():
             messages.error(request, _("The label cannot be deleted because it is in use"))
-            return redirect(reverse_lazy("labels_index"))
+            return redirect(reverse_lazy("labels:index"))
 
         return super().post(request, *args, **kwargs)

@@ -8,7 +8,7 @@
 
 {% block content %}
 <p>{% translate "Are you sure you want to delete" %} {{ object.name }}?</p>
-<form action="{% url 'labels_delete' object.id %}" method="post">
+<form action="{% url 'labels:delete' object.id %}" method="post">
   {% csrf_token %}
   {% translate "Yes, delete" as btn_delete %}
   {% bootstrap_button button_type="submit" button_class="btn-danger" content=btn_delete %}  

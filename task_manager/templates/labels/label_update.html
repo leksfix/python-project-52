@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'labels_update' object.id %}" method="post">
+<form action="{% url 'labels:update' object.id %}" method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% translate "Update" as btn_update %}

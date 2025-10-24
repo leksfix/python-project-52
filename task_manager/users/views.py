@@ -7,25 +7,13 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
-from django.contrib.auth.mixins import UserPassesTestMixin
-
-class CheckSameUserMixin(UserPassesTestMixin):
-    same_user_error_message = _("You do not have permission to modify another user")
-    same_user_error_url = ""
-
-    def test_func(self):
-        self.kwargs["pk"] == self.request.user.id
-
-    def handle_no_permission(self):
-        messages.error(self.request, self.same_user_error_message)
-        return redirect(reverse_lazy("users_index"))
-
+from task_manager.users.mixins import CheckSameUserMixin
 
 
 
 class UsersIndexView(ListView):
     model = User
-    ordering = "id"
+    queryset = User.objects.all().order_by("id")
     template_name = "users/user_list.html"
 
 
@@ -33,7 +21,7 @@ class UsersCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = UserCreateForm
     template_name = "users/user_create.html"
-    success_url = reverse_lazy("users_index")
+    success_url = reverse_lazy("users:index")
     success_message = _("User successfully created")
 
 
@@ -42,22 +30,22 @@ class UsersUpdateView(CheckSameUserMixin, SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = "users/user_update.html"
-    success_url = reverse_lazy("users_index")
+    success_url = reverse_lazy("users:index")
     success_message = _("User successfully updated")
-    same_user_error_url = reverse_lazy("users_index")
+    same_user_error_url = reverse_lazy("users:index")
 
 
 
 class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
     model = User
     template_name = "users/user_confirm_delete.html"
-    success_url = reverse_lazy("users_index")
+    success_url = reverse_lazy("users:index")
     success_message = _("User successfully deleted")
-    same_user_error_url = reverse_lazy("users_index")
+    same_user_error_url = reverse_lazy("users:index")
 
     def post(self, request, *args, **kwargs):
         try:
             return super().post(request, *args, **kwargs)
         except ProtectedError:
             messages.error(self.request, _("The user cannot be deleted because it is in use"))
-            return redirect(reverse_lazy("users_index"))
+            return redirect(reverse_lazy("users:index"))

@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django_filters.views import FilterView
+from task_manager.tasks.mixins import CheckAuthorIsMe
 
 
 
@@ -20,7 +21,6 @@ class TasksIndexView(LoginRequiredMixin, FilterView):
 
 class TasksDetailView(LoginRequiredMixin, DetailView):
     model = Task
-    #queryset = Task.objects.get(pk=self.request.id)
     template_name = "tasks/task_detail.html"
 
 
@@ -28,7 +28,7 @@ class TasksCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_create.html"
-    success_url = reverse_lazy("tasks_index")
+    success_url = reverse_lazy("tasks:index")
     success_message = _("Task successfully created")
 
     def form_valid(self, form):
@@ -42,22 +42,16 @@ class TasksUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_update.html"
-    success_url = reverse_lazy("tasks_index")
+    success_url = reverse_lazy("tasks:index")
     success_message = _("Task successfully updated")
 
 
 
-class TasksDeleteView(UserPassesTestMixin, LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class TasksDeleteView(CheckAuthorIsMe, LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Task
     template_name = "tasks/task_confirm_delete.html"
-    success_url = reverse_lazy("tasks_index")
+    success_url = reverse_lazy("tasks:index")
     success_message = _("Task successfully deleted")
-    del_error_message = _("A task can only be deleted by its author")
-
-    def test_func(self):
-        self.get_object().author_id == self.request.user.id
-
-    def handle_no_permission(self):
-        messages.error(self.request, self.del_error_message)
-        return redirect(reverse_lazy("tasks_index"))
+    author_error_message = _("A task can only be deleted by its author")
+    author_error_url = reverse_lazy("tasks:index")
 

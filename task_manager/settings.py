@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,13 +22,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d%8(=jf9e#4zh&$q%=eoveuyj29x+8e4#%-ls(rof)+-cy^y%k'
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-d%8(=jf9e#4zh&$q%=eoveuyj29x+8e4#%-ls(rof)+-cy^y%k'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get(
+    'DEBUG',
+    True
+)
 
-#ALLOWED_HOSTS = ['webserver', '127.0.0.1'] ## Add webserver and localhost
-ALLOWED_HOSTS = ['*'] ##
+ALLOWED_HOSTS = ['*'] # Allowed any host
 
 
 # Application definition
@@ -39,19 +45,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_bootstrap5', ##
-    'task_manager',  ## Add task_manager as app
-    'task_manager.users',  ##
-    'task_manager.statuses',  ##
-    'task_manager.tasks',  ##
-    'task_manager.labels',  ##
-    'django_filters', ##
+    'django_bootstrap5',
+    'task_manager',
+    'task_manager.users',
+    'task_manager.statuses',
+    'task_manager.tasks',
+    'task_manager.labels',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware', ##
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -64,14 +70,14 @@ ROOT_URLCONF = 'task_manager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], ## Add templates dir
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n',  ##
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -97,29 +103,21 @@ DATABASES["default"].update(db_from_env)
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    #{
-    #    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    #},
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         "OPTIONS": {
-            "min_length": 3, ##
+            "min_length": 3, # Project requirements
         },
     },
-    #{
-    #    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    #},
-    #{
-    #    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    #},
+    # Deleted CommonPasswordValidator and NumericPasswordValidator
+    # and UserAttributeSimilarityValidator (project requirements)
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -128,7 +126,7 @@ USE_I18N = True
 USE_TZ = True
 
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',  ##
+    BASE_DIR / 'locale',
 ]
 
 LANGUAGES = [

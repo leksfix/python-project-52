@@ -10,7 +10,7 @@ from django.db.models import ProtectedError
 
 class StatusesIndexView(ListView):
     model = Status
-    ordering = "id"
+    queryset = Status.objects.all().order_by("id")
     template_name = "statuses/status_list.html"
 
 
@@ -18,7 +18,7 @@ class StatusesCreateView(SuccessMessageMixin, CreateView):
     model = Status
     form_class = StatusForm
     template_name = "statuses/status_create.html"
-    success_url = reverse_lazy("statuses_index")
+    success_url = reverse_lazy("statuses:index")
     success_message = _("Status successfully created")
 
 
@@ -27,7 +27,7 @@ class StatusesUpdateView(SuccessMessageMixin, UpdateView):
     model = Status
     form_class = StatusForm
     template_name = "statuses/status_update.html"
-    success_url = reverse_lazy("statuses_index")
+    success_url = reverse_lazy("statuses:index")
     success_message = _("Status successfully updated")
 
 
@@ -35,7 +35,7 @@ class StatusesUpdateView(SuccessMessageMixin, UpdateView):
 class StatusesDeleteView(SuccessMessageMixin, DeleteView):
     model = Status
     template_name = "statuses/status_confirm_delete.html"
-    success_url = reverse_lazy("statuses_index")
+    success_url = reverse_lazy("statuses:index")
     success_message = _("Status successfully deleted")
 
     def post(self, request, *args, **kwargs):
@@ -43,4 +43,4 @@ class StatusesDeleteView(SuccessMessageMixin, DeleteView):
             return super().post(request, *args, **kwargs)
         except ProtectedError:
             messages.error(self.request, _("The status cannot be deleted because it is in use"))
-            return redirect(reverse_lazy("statuses_index"))
+            return redirect(reverse_lazy("statuses:index"))

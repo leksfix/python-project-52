@@ -8,7 +8,7 @@
 
 {% block content %}
 
-<form action="{% url 'statuses_create' %}" method="post">
+<form action="{% url 'statuses:create' %}" method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% translate "Create" as btn_create %}

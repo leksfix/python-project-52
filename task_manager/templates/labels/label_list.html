@@ -8,7 +8,7 @@
 
 {% block content %}
 
-<a class="btn btn-primary mb-3" href="{% url 'labels_create' %}">{% translate "Create label" %}</a>
+<a class="btn btn-primary mb-3" href="{% url 'labels:create' %}">{% translate "Create label" %}</a>
 
 <table class="table table-striped">
   <thead>
@@ -26,9 +26,9 @@
         <td>{{ label.name }}</td>
         <td>{{ label.created_at }}</td>
         <td>
-          <a href="{% url 'labels_update' label.id %}">{% translate "Edit" %}</a>
+          <a href="{% url 'labels:update' label.id %}">{% translate "Edit" %}</a>
           <br>
-          <a href="{% url 'labels_delete' label.id %}">{% translate "Delete" %}</a>
+          <a href="{% url 'labels:delete' label.id %}">{% translate "Delete" %}</a>
         </td>
       </tr>
       {% endfor %}

@@ -5,10 +5,10 @@ class Status(models.Model):
     name = models.CharField(
         max_length=100,
         unique=True,
-        verbose_name=_("Name")
+        verbose_name=_("Name"),
     )
     created_at = models.DateTimeField(
-        auto_now_add=True
+        auto_now_add=True,
     )
     
     class Meta:

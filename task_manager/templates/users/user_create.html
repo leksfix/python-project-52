@@ -8,7 +8,7 @@
 
 {% block content %}
 
-<form action="{% url 'users_create' %}" method="post">
+<form action="{% url 'users:create' %}" method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% translate "Register" as btn_register %}

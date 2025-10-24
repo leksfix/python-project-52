@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'tasks_update' object.id %}" method="post">
+<form action="{% url 'tasks:update' object.id %}" method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% translate "Update" as btn_update %}
