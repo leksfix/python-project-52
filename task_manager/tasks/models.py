@@ -4,6 +4,7 @@ from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
 from django.contrib.auth.models import User
 
+
 class Task(models.Model):
     name = models.CharField(
         max_length=150,
@@ -37,7 +38,7 @@ class Task(models.Model):
         Label,
         blank=True,
         verbose_name=_("Labels"),
-        )
+    )
 
     class Meta:
         verbose_name = _("Task")

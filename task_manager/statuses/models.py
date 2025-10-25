@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class Status(models.Model):
     name = models.CharField(
         max_length=100,
@@ -10,7 +11,7 @@ class Status(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
-    
+
     class Meta:
         verbose_name = _("Status")
         verbose_name_plural = _("Statuses")

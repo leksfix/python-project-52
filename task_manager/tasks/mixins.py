@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import UserPassesTestMixin
 
+
 class CheckAuthorIsMe(UserPassesTestMixin):
     author_error_message = ""
     author_error_url = ""

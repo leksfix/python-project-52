@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
 
+
 class StatusesIndexView(ListView):
     model = Status
     queryset = Status.objects.all().order_by("id")
@@ -22,10 +23,10 @@ class StatusesCreateView(SuccessMessageMixin, CreateView):
     success_message = _("Status successfully created")
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)        
-        context['page_title'] = _("Create status")
-        context['action_url'] = reverse_lazy('statuses:create')
-        context['submit_btn_text'] = _("Create")
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Create status")
+        context["action_url"] = reverse_lazy("statuses:create")
+        context["submit_btn_text"] = _("Create")
 
         return context
 
@@ -38,10 +39,12 @@ class StatusesUpdateView(SuccessMessageMixin, UpdateView):
     success_message = _("Status successfully updated")
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)        
-        context['page_title'] = _("Edit status")
-        context['action_url'] = reverse_lazy('statuses:update', kwargs={'pk': self.object.id})
-        context['submit_btn_text'] = _("Update")
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Edit status")
+        context["action_url"] = reverse_lazy(
+            "statuses:update", kwargs={"pk": self.object.id}
+        )
+        context["submit_btn_text"] = _("Update")
 
         return context
 
@@ -56,14 +59,20 @@ class StatusesDeleteView(SuccessMessageMixin, DeleteView):
         try:
             return super().post(request, *args, **kwargs)
         except ProtectedError:
-            messages.error(self.request, _("The status cannot be deleted because it is in use"))
+            messages.error(
+                self.request, _("The status cannot be deleted because it is in use")
+            )
             return redirect(reverse_lazy("statuses:index"))
-    
+
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)        
-        context['page_title'] = _("Delete status")
-        context['warning_message'] = _("Are you sure you want to delete") + ' ' + self.object.name + '?'
-        context['delete_url'] = reverse_lazy('statuses:delete', kwargs={'pk': self.object.id})
-        context['delete_btn_text'] = _("Yes, delete")
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Delete status")
+        context["warning_message"] = (
+            _("Are you sure you want to delete") + " " + self.object.name + "?"
+        )
+        context["delete_url"] = reverse_lazy(
+            "statuses:delete", kwargs={"pk": self.object.id}
+        )
+        context["delete_btn_text"] = _("Yes, delete")
 
         return context

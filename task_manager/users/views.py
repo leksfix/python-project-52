@@ -10,7 +10,6 @@ from django.db.models import ProtectedError
 from task_manager.users.mixins import CheckSameUserMixin
 
 
-
 class UsersIndexView(ListView):
     model = User
     queryset = User.objects.all().order_by("id")
@@ -25,7 +24,6 @@ class UsersCreateView(SuccessMessageMixin, CreateView):
     success_message = _("User successfully created")
 
 
-
 class UsersUpdateView(CheckSameUserMixin, SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
@@ -33,7 +31,6 @@ class UsersUpdateView(CheckSameUserMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("users:index")
     success_message = _("User successfully updated")
     same_user_error_url = reverse_lazy("users:index")
-
 
 
 class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
@@ -47,5 +44,7 @@ class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
         try:
             return super().post(request, *args, **kwargs)
         except ProtectedError:
-            messages.error(self.request, _("The user cannot be deleted because it is in use"))
+            messages.error(
+                self.request, _("The user cannot be deleted because it is in use")
+            )
             return redirect(reverse_lazy("users:index"))
