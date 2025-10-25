@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}
+{{ page_title }}
+{% endblock %}
+
+{% block content %}
+<p>{{ warning_message }}</p>
+<form action="{{ delete_url }}" method="post">
+  {% csrf_token %}
+  {% bootstrap_button delete_btn_text button_type="submit" button_class="btn-danger" %}  
+</form>
+{% endblock %}
