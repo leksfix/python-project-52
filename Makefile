@@ -4,7 +4,7 @@ install:
 
 
 collectstatic:
-	uv run django-admin compilemessages
+	uv run manage.py collectstatic
 
 
 migrate:
