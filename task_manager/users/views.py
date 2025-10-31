@@ -55,7 +55,7 @@ class UsersUpdateView(CheckSameUserMixin, SuccessMessageMixin, UpdateView):
 class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
     model = User
     template_name = "common/confirm_delete.html"
-    success_url = reverse_lazy("login")
+    success_url = reverse_lazy("users:index")
     success_message = _("User successfully deleted")
     same_user_error_url = reverse_lazy("users:index")
 
