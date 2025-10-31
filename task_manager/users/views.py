@@ -19,24 +19,43 @@ class UsersIndexView(ListView):
 class UsersCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = UserCreateForm
-    template_name = "users/user_create.html"
-    success_url = reverse_lazy("users:index")
+    template_name = "common/create_update.html"
+    success_url = reverse_lazy("login")
     success_message = _("User successfully created")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Registration")
+        context["action_url"] = reverse_lazy("users:create")
+        context["submit_btn_text"] = _("Register")
+
+        return context
 
 
 class UsersUpdateView(CheckSameUserMixin, SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
-    template_name = "users/user_update.html"
+    template_name = "common/create_update.html"
     success_url = reverse_lazy("users:index")
     success_message = _("User successfully updated")
     same_user_error_url = reverse_lazy("users:index")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Update user")
+        context["action_url"] = reverse_lazy(
+            "users:update",
+            kwargs={"pk": self.object.id}
+        )
+        context["submit_btn_text"] = _("Update")
+
+        return context
+
 
 class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
     model = User
-    template_name = "users/user_confirm_delete.html"
-    success_url = reverse_lazy("users:index")
+    template_name = "common/confirm_delete.html"
+    success_url = reverse_lazy("login")
     success_message = _("User successfully deleted")
     same_user_error_url = reverse_lazy("users:index")
 
@@ -48,3 +67,16 @@ class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
                 self.request, _("The user cannot be deleted because it is in use")
             )
             return redirect(reverse_lazy("users:index"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Delete user")
+        context["warning_message"] = (
+            _("Are you sure you want to delete") + " " + self.object.get_full_name() + "?"
+        )
+        context["delete_url"] = reverse_lazy(
+            "users:delete", kwargs={"pk": self.object.id}
+        )
+        context["delete_btn_text"] = _("Yes, delete")
+
+        return context
