@@ -39,7 +39,7 @@
         <td><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></td>
         <td>{{ task.status }}</td>
         <td>{{ task.author }}</td>
-        <td>{{ task.assignee }}</td>
+        <td>{{ task.executor }}</td>
         <td>{{ task.created_at }}</td>
         <td>
           <a href="{% url 'tasks:update' task.id %}">{% translate "Edit" %}</a>

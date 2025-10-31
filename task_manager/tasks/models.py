@@ -25,7 +25,7 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         verbose_name=_("Author"),
     )
-    assignee = models.ForeignKey(
+    executor = models.ForeignKey(
         User,
         related_name="assigned_tasks",
         on_delete=models.PROTECT,
