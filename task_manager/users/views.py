@@ -64,7 +64,8 @@ class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
             return super().post(request, *args, **kwargs)
         except ProtectedError:
             messages.error(
-                self.request, _("The user cannot be deleted because it is in use")
+                self.request,
+                _("The user cannot be deleted because it is in use")
             )
             return redirect(reverse_lazy("users:index"))
 
@@ -72,7 +73,8 @@ class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Delete user")
         context["warning_message"] = (
-            _("Are you sure you want to delete") + " " + self.object.get_full_name() + "?"
+            _("Are you sure you want to delete") +
+            " " + self.object.get_full_name() + "?"
         )
         context["delete_url"] = reverse_lazy(
             "users:delete", kwargs={"pk": self.object.id}

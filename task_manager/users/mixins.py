@@ -5,7 +5,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CheckSameUserMixin(UserPassesTestMixin):
-    same_user_error_message = _("You do not have permission to modify another user")
+    same_user_error_message = _(
+        "You do not have permission to modify another user"
+    )
     same_user_error_url = ""
 
     def test_func(self):

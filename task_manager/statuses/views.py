@@ -60,7 +60,8 @@ class StatusesDeleteView(SuccessMessageMixin, DeleteView):
             return super().post(request, *args, **kwargs)
         except ProtectedError:
             messages.error(
-                self.request, _("The status cannot be deleted because it is in use")
+                self.request,
+                _("The status cannot be deleted because it is in use")
             )
             return redirect(reverse_lazy("statuses:index"))
 
