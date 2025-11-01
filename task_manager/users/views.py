@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
-from django.contrib.auth.models import User
+from task_manager.users.models import User
 from task_manager.users.forms import UserCreateForm, UserUpdateForm
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
