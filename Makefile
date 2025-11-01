@@ -4,7 +4,7 @@ install:
 
 
 collectstatic:
-	uv run manage.py collectstatic
+	uv run manage.py collectstatic --no-input
 
 
 migrate:
