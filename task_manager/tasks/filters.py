@@ -13,7 +13,7 @@ class TasksFilter(FilterSet):
     )
     my_tasks = filters.BooleanFilter(
         method="my_tasks_filter",
-        field_name="executor_id",
+        field_name="author_id",
         label=_("Only my tasks"),
         widget=forms.CheckboxInput,
     )
@@ -29,5 +29,5 @@ class TasksFilter(FilterSet):
 
     def my_tasks_filter(self, queryset, name, value):
         if value:
-            return queryset.filter(executor_id=self.request.user.id)
+            return queryset.filter(author_id=self.request.user.id)
         return queryset
