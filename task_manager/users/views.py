@@ -38,7 +38,6 @@ class UsersUpdateView(CheckSameUserMixin, SuccessMessageMixin, UpdateView):
     template_name = "common/create_update.html"
     success_url = reverse_lazy("users:index")
     success_message = _("User successfully updated")
-    same_user_error_url = reverse_lazy("users:index")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -57,7 +56,6 @@ class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
     template_name = "common/confirm_delete.html"
     success_url = reverse_lazy("users:index")
     success_message = _("User successfully deleted")
-    same_user_error_url = reverse_lazy("users:index")
 
     def post(self, request, *args, **kwargs):
         try:

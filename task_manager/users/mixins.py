@@ -2,13 +2,14 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse_lazy
 
 
 class CheckSameUserMixin(UserPassesTestMixin):
     same_user_error_message = _(
         "You do not have permission to modify another user"
     )
-    same_user_error_url = ""
+    same_user_error_url = reverse_lazy("users:index")
 
     def test_func(self):
         return self.kwargs["pk"] == self.request.user.id

@@ -66,8 +66,6 @@ class TasksDeleteView(
     template_name = "common/confirm_delete.html"
     success_url = reverse_lazy("tasks:index")
     success_message = _("Task successfully deleted")
-    author_error_message = _("A task can only be deleted by its author")
-    author_error_url = reverse_lazy("tasks:index")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
