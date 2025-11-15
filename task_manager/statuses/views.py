@@ -7,15 +7,16 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class StatusesIndexView(ListView):
+class StatusesIndexView(LoginRequiredMixin, ListView):
     model = Status
     queryset = Status.objects.all().order_by("id")
     template_name = "statuses/status_list.html"
 
 
-class StatusesCreateView(SuccessMessageMixin, CreateView):
+class StatusesCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Status
     form_class = StatusForm
     template_name = "common/create_update.html"
@@ -31,7 +32,7 @@ class StatusesCreateView(SuccessMessageMixin, CreateView):
         return context
 
 
-class StatusesUpdateView(SuccessMessageMixin, UpdateView):
+class StatusesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Status
     form_class = StatusForm
     template_name = "common/create_update.html"
@@ -49,7 +50,7 @@ class StatusesUpdateView(SuccessMessageMixin, UpdateView):
         return context
 
 
-class StatusesDeleteView(SuccessMessageMixin, DeleteView):
+class StatusesDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Status
     template_name = "common/confirm_delete.html"
     success_url = reverse_lazy("statuses:index")

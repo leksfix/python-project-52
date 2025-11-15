@@ -6,15 +6,16 @@ from task_manager.labels.forms import LabelForm
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class LabelsIndexView(ListView):
+class LabelsIndexView(LoginRequiredMixin, ListView):
     model = Label
     queryset = Label.objects.all().order_by("id")
     template_name = "labels/label_list.html"
 
 
-class LabelsCreateView(SuccessMessageMixin, CreateView):
+class LabelsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Label
     form_class = LabelForm
     template_name = "common/create_update.html"
@@ -30,7 +31,7 @@ class LabelsCreateView(SuccessMessageMixin, CreateView):
         return context
 
 
-class LabelsUpdateView(SuccessMessageMixin, UpdateView):
+class LabelsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Label
     form_class = LabelForm
     template_name = "common/create_update.html"
@@ -48,7 +49,7 @@ class LabelsUpdateView(SuccessMessageMixin, UpdateView):
         return context
 
 
-class LabelsDeleteView(SuccessMessageMixin, DeleteView):
+class LabelsDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Label
     template_name = "common/confirm_delete.html"
     success_url = reverse_lazy("labels:index")
