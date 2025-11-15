@@ -18,3 +18,9 @@ dependencies = [
 dev = [
     "ruff>=0.14.2",
 ]
+
+[tool.ruff]
+line-length = 79
+select = ["E", "W", "F", "I"]
+ignore = ["E501"]
+extend-exclude = ["venv", ".venv"]

@@ -1,13 +1,14 @@
 from django.contrib import messages
-from django.shortcuts import redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView
-from task_manager.users.models import User
-from task_manager.users.forms import UserCreateForm, UserUpdateForm
-from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
+from task_manager.users.forms import UserCreateForm, UserUpdateForm
 from task_manager.users.mixins import CheckSameUserMixin
+from task_manager.users.models import User
 
 
 class UsersIndexView(ListView):

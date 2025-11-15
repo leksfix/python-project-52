@@ -1,11 +1,16 @@
 from django.test import TestCase
 from django.urls import reverse
+
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
 
+
 class StatusesIndexViewTest(TestCase):
     def setUp(self):
-        test_user1 = User.objects.create_user(username='testuser1', password='12345')
+        test_user1 = User.objects.create_user(
+            username="testuser1",
+            password="12345",
+        )
         test_user1.save()
         number_of_statuses = 5
         for status_num in range(number_of_statuses):
@@ -16,7 +21,7 @@ class StatusesIndexViewTest(TestCase):
         self.assertRedirects(resp, '/login/?next=/statuses/')
 
     def test_logged_in_uses_correct_template(self):
-        self.client.login(username='testuser1', password='12345')
+        self.client.login(username="testuser1", password="12345")
         resp = self.client.get(reverse('statuses:index'))
         self.assertEqual(str(resp.context['user']), 'testuser1')
         self.assertEqual(resp.status_code, 200)
@@ -33,7 +38,10 @@ class StatusesIndexViewTest(TestCase):
 
 class StatusesCreateViewTest(TestCase):
     def setUp(self):
-        test_user1 = User.objects.create_user(username='testuser1', password='12345')
+        test_user1 = User.objects.create_user(
+            username="testuser1",
+            password="12345",
+        )
         test_user1.save()
 
     def test_status_create_not_logged_in(self):
@@ -64,7 +72,10 @@ class StatusesCreateViewTest(TestCase):
 
 class StatusesUpdateViewTest(TestCase):
     def setUp(self):
-        test_user1 = User.objects.create_user(username='testuser1', password='12345')
+        test_user1 = User.objects.create_user(
+            username="testuser1",
+            password="12345",
+        )
         test_user1.save()
         self.status = Status.objects.create(name='Старый статус')
 
@@ -87,7 +98,10 @@ class StatusesUpdateViewTest(TestCase):
 
 class StatusesDeleteViewTest(TestCase):
     def setUp(self):
-        test_user1 = User.objects.create_user(username='testuser1', password='12345')
+        test_user1 = User.objects.create_user(
+            username="testuser1",
+            password="12345"
+        )
         test_user1.save()
         self.status = Status.objects.create(name='Статус')
 

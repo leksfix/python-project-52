@@ -1,8 +1,8 @@
 from django.contrib import messages
-from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
-from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import TemplateView
 
 
 class IndexView(TemplateView):
