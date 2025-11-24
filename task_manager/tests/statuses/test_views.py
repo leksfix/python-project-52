@@ -1,6 +1,7 @@
 from django.urls import reverse
-from task_manager.tests.utils.my_test_case import MyTestCase
+
 from task_manager.statuses.models import Status
+from task_manager.tests.utils.my_test_case import MyTestCase
 
 
 class StatusesIndexViewTest(MyTestCase):

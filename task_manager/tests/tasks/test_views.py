@@ -1,10 +1,10 @@
-from django.urls import reverse
 from django.shortcuts import get_object_or_404
-from task_manager.tests.utils.my_test_case import MyTestCase
+from django.urls import reverse
+
 from task_manager.labels.models import Label
 from task_manager.statuses.models import Status
 from task_manager.tasks.models import Task
-from task_manager.users.models import User
+from task_manager.tests.utils.my_test_case import MyTestCase
 
 
 class TasksIndexViewTest(MyTestCase):
@@ -106,12 +106,11 @@ class TasksDetailViewTest(MyTestCase):
             Label.objects.create(name='Label 2'),
         ]
         status = Status.objects.create(name='Status')
-        user=self.test_user_1
         self.task = Task.objects.create(
             name='Task name',
             description='Task desc',
-            author=user,
-            executor=user,
+            author=self.test_user_1,
+            executor=self.test_user_1,
             status=status,
         )
         self.task.labels.set(labels)
@@ -140,7 +139,7 @@ class TasksCreateViewTest(MyTestCase):
             Label.objects.create(name='Label 2').pk,
             ]
         self.status = Status.objects.create(name='Status')
-        self.user=self.test_user_1
+        self.user = self.test_user_1
 
     def test_task_create_not_logged_in(self):
         response = self.client.post(

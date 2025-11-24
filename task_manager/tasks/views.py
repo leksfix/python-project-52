@@ -62,7 +62,7 @@ class TasksUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 class TasksDeleteView(
     LoginRequiredMixin,
-    CheckAuthorIsMe, 
+    CheckAuthorIsMe,
     SuccessMessageMixin,
     DeleteView
 ):

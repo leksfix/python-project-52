@@ -15,8 +15,6 @@ class StatusesIndexView(LoginRequiredMixin, ListView):
     model = Status
     queryset = Status.objects.all().order_by("id")
     template_name = "statuses/status_list.html"
-    #permission_denied_message = _("You are not logged in! Please log in.")
-    #raise_exception = True
 
 
 class StatusesCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -25,7 +23,6 @@ class StatusesCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = "common/create_update.html"
     success_url = reverse_lazy("statuses:index")
     success_message = _("Status successfully created")
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
