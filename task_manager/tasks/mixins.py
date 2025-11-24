@@ -13,5 +13,8 @@ class CheckAuthorIsMe(UserPassesTestMixin):
         return self.get_object().author_id == self.request.user.id
 
     def handle_no_permission(self):
-        messages.error(self.request, self.author_error_message)
-        return redirect(self.author_error_url)
+        if self.request.user.is_authenticated:
+            messages.error(self.request, self.author_error_message)
+            return redirect(self.author_error_url)            
+        else:
+            return super().handle_no_permission()
