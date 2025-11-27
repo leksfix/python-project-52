@@ -9,6 +9,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from task_manager.users.forms import UserCreateForm, UserUpdateForm
 from task_manager.users.mixins import CheckSameUserMixin
 from task_manager.users.models import User
+from task_manager.utils.view_mixins import MyLoginRequiredMixin
 
 
 class UsersIndexView(ListView):
@@ -33,7 +34,11 @@ class UsersCreateView(SuccessMessageMixin, CreateView):
         return context
 
 
-class UsersUpdateView(CheckSameUserMixin, SuccessMessageMixin, UpdateView):
+class UsersUpdateView(
+    MyLoginRequiredMixin,
+    CheckSameUserMixin,
+    SuccessMessageMixin,
+    UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = "common/create_update.html"
@@ -52,7 +57,11 @@ class UsersUpdateView(CheckSameUserMixin, SuccessMessageMixin, UpdateView):
         return context
 
 
-class UsersDeleteView(CheckSameUserMixin, SuccessMessageMixin, DeleteView):
+class UsersDeleteView(
+    MyLoginRequiredMixin,
+    CheckSameUserMixin,
+    SuccessMessageMixin,
+    DeleteView):
     model = User
     template_name = "common/confirm_delete.html"
     success_url = reverse_lazy("users:index")

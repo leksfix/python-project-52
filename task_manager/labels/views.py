@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -8,15 +7,16 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
+from task_manager.utils.view_mixins import MyLoginRequiredMixin
 
 
-class LabelsIndexView(LoginRequiredMixin, ListView):
+class LabelsIndexView(MyLoginRequiredMixin, ListView):
     model = Label
     queryset = Label.objects.all().order_by("id")
     template_name = "labels/label_list.html"
 
 
-class LabelsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class LabelsCreateView(MyLoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Label
     form_class = LabelForm
     template_name = "common/create_update.html"
@@ -32,7 +32,7 @@ class LabelsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return context
 
 
-class LabelsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class LabelsUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Label
     form_class = LabelForm
     template_name = "common/create_update.html"
@@ -50,7 +50,7 @@ class LabelsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return context
 
 
-class LabelsDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class LabelsDeleteView(MyLoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Label
     template_name = "common/confirm_delete.html"
     success_url = reverse_lazy("labels:index")

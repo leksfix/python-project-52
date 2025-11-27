@@ -1,4 +1,3 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -9,19 +8,20 @@ from task_manager.tasks.filters import TasksFilter
 from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.mixins import CheckAuthorIsMe
 from task_manager.tasks.models import Task
+from task_manager.utils.view_mixins import MyLoginRequiredMixin
 
 
-class TasksIndexView(LoginRequiredMixin, FilterView):
+class TasksIndexView(MyLoginRequiredMixin, FilterView):
     filterset_class = TasksFilter
     template_name = "tasks/task_filter.html"
 
 
-class TasksDetailView(LoginRequiredMixin, DetailView):
+class TasksDetailView(MyLoginRequiredMixin, DetailView):
     model = Task
     template_name = "tasks/task_detail.html"
 
 
-class TasksCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class TasksCreateView(MyLoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = "common/create_update.html"
@@ -42,7 +42,7 @@ class TasksCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return context
 
 
-class TasksUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class TasksUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "common/create_update.html"
@@ -61,7 +61,7 @@ class TasksUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 class TasksDeleteView(
-    LoginRequiredMixin,
+    MyLoginRequiredMixin,
     CheckAuthorIsMe,
     SuccessMessageMixin,
     DeleteView

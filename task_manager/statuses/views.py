@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
@@ -9,15 +8,16 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
+from task_manager.utils.view_mixins import MyLoginRequiredMixin
 
 
-class StatusesIndexView(LoginRequiredMixin, ListView):
+class StatusesIndexView(MyLoginRequiredMixin, ListView):
     model = Status
     queryset = Status.objects.all().order_by("id")
     template_name = "statuses/status_list.html"
 
 
-class StatusesCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class StatusesCreateView(MyLoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Status
     form_class = StatusForm
     template_name = "common/create_update.html"
@@ -33,7 +33,7 @@ class StatusesCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return context
 
 
-class StatusesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class StatusesUpdateView(MyLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Status
     form_class = StatusForm
     template_name = "common/create_update.html"
@@ -51,7 +51,7 @@ class StatusesUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return context
 
 
-class StatusesDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class StatusesDeleteView(MyLoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Status
     template_name = "common/confirm_delete.html"
     success_url = reverse_lazy("statuses:index")

@@ -12,7 +12,10 @@ class CheckSameUserMixin(UserPassesTestMixin):
     same_user_error_url = reverse_lazy("users:index")
 
     def test_func(self):
-        return self.kwargs["pk"] == self.request.user.id
+        return (
+            not self.request.user.is_authenticated or
+            self.kwargs["pk"] == self.request.user.id
+        )
 
     def handle_no_permission(self):
         messages.error(self.request, self.same_user_error_message)
