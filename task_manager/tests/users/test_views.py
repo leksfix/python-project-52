@@ -13,7 +13,10 @@ class UsersLoginViewTest(MyTestCase):
                 'password': self._test_password_1,
             }
         )
-        self.assertEqual(int(self.client.session['_auth_user_id']), self.test_user_1.id)
+        self.assertEqual(
+            int(self.client.session['_auth_user_id']),
+            self.test_user_1.id
+        )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse("index"))
 
@@ -102,7 +105,6 @@ class UsersUpdateViewTest(MyTestCase):
             )
         )
         self.assertEqual(int(self.client.session['_auth_user_id']), user_old.id)
-
 
 
 class UserDeleteViewTest(MyTestCase):
